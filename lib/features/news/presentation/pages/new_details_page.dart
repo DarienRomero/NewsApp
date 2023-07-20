@@ -74,7 +74,7 @@ class NewDetailsPage extends StatelessWidget {
               left: mqWidth(context, 5),
               child: IconButton(
                 onPressed: () => Navigator.pop(context), 
-                icon: Icon(Platform.isAndroid ? Icons.arrow_back : Icons.arrow_back_ios)
+                icon: Icon(Platform.isAndroid ? Icons.arrow_back : Icons.arrow_back_ios, color: Colors.white)
               ),
             )
           ],

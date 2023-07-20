@@ -31,8 +31,8 @@ class NewPreviewItem extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             GeneralImage(
-              width: mqWidth(context, 20),
-              height: mqWidth(context, 20),
+              width: mqWidth(context, 25),
+              height: mqWidth(context, 25),
               url: articleEntity.urlToImage,
               fromLocal: false,
               borderRadius: 10,
@@ -40,13 +40,13 @@ class NewPreviewItem extends StatelessWidget {
             ),
             const HSpacing(5),
             SizedBox(
-              height: mqWidth(context, 20),
+              height: mqWidth(context, 25),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(
-                    width: mqWidth(context, 65),
+                    width: mqWidth(context, 60),
                     child: Text(
                       articleEntity.title, 
                       style: const TextStyle(
@@ -58,11 +58,14 @@ class NewPreviewItem extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),
-                  Text("${articleEntity.author} | ${formatDate(articleEntity.publishedAt)}", style: const TextStyle(
-                    color: Colors.grey,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w400
-                  ))
+                  SizedBox(
+                    width: mqWidth(context, 60),
+                    child: Text("${articleEntity.author} | ${formatDate(articleEntity.publishedAt)}", style: const TextStyle(
+                      color: Colors.grey,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w400
+                    )),
+                  )
                 ],
               ),
             )

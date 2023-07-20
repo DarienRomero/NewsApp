@@ -27,6 +27,11 @@ class _NewsHomePageState extends State<NewsHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final cacheSize = PaintingBinding.instance.imageCache.currentSizeBytes;
+    if(cacheSize > 20 * 1024 * 1024){
+      PaintingBinding.instance.imageCache.clear();
+      PaintingBinding.instance.imageCache.clearLiveImages();
+    }
     return ScaffoldWrapper(
       appBar: AppBar(
         title: const Text('Aplicación de noticias'),
