@@ -1,18 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:news_app/core/date/date_utils.dart';
 import 'package:news_app/core/navigation.dart';
 import 'package:news_app/core/utils.dart';
 import 'package:news_app/features/common/presentation/widgets/general_image.dart';
 import 'package:news_app/features/common/presentation/widgets/h_spacing.dart';
+import 'package:news_app/features/news/domain/entities/article_entity.dart';
 import 'package:news_app/features/news/presentation/pages/new_details_page.dart';
 
 class NewPreviewItem extends StatelessWidget {
-  const NewPreviewItem({super.key});
+  final ArticleEntity articleEntity;
+  const NewPreviewItem({
+    super.key,
+    required this.articleEntity
+  });
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: (){
-        Navigator.push(context, cupertinoNavigationRoute(context, const NewDetailsPage()));
+        Navigator.push(context, cupertinoNavigationRoute(context, NewDetailsPage(
+          articleEntity: articleEntity,
+        )));
       },
       child: Container(
         width: mqWidth(context, 90),
@@ -25,7 +33,7 @@ class NewPreviewItem extends StatelessWidget {
             GeneralImage(
               width: mqWidth(context, 20),
               height: mqWidth(context, 20),
-              url: "",
+              url: articleEntity.urlToImage,
               fromLocal: false,
               borderRadius: 10,
               fit: BoxFit.cover,
@@ -39,18 +47,18 @@ class NewPreviewItem extends StatelessWidget {
                 children: [
                   SizedBox(
                     width: mqWidth(context, 65),
-                    child: const Text(
-                      "6 Houses destroyed  in massive fire", 
-                      style: TextStyle(
+                    child: Text(
+                      articleEntity.title, 
+                      style: const TextStyle(
                         color: Colors.black,
                         fontSize: 18,
                         fontWeight: FontWeight.w500
                       ),
-                      maxLines: 3,
+                      maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),
-                  const Text("Rossmery | 10/05/23", style: TextStyle(
+                  Text("${articleEntity.author} | ${formatDate(articleEntity.publishedAt)}", style: const TextStyle(
                     color: Colors.grey,
                     fontSize: 16,
                     fontWeight: FontWeight.w400

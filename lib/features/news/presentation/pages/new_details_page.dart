@@ -3,9 +3,14 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:news_app/core/utils.dart';
 import 'package:news_app/features/common/presentation/widgets/general_image.dart';
+import 'package:news_app/features/news/domain/entities/article_entity.dart';
 
 class NewDetailsPage extends StatelessWidget {
-  const NewDetailsPage({Key? key}) : super(key: key);
+  final ArticleEntity articleEntity;
+  const NewDetailsPage({
+    Key? key,
+    required this.articleEntity
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +24,7 @@ class NewDetailsPage extends StatelessWidget {
               width: mqWidth(context, 100),
               height: mqWidth(context, 100),
               fromLocal: false,
-              url: "",
+              url: articleEntity.urlToImage,
               fit: BoxFit.cover,
             ),
             Positioned(
@@ -29,9 +34,9 @@ class NewDetailsPage extends StatelessWidget {
                   horizontal: mqWidth(context, 5)
                 ),
                 width: mqWidth(context, 90),
-                child: const Text(
-                  "6 Houses destroyed  in massive fire", 
-                  style: TextStyle(
+                child: Text(
+                 articleEntity.title, 
+                  style: const TextStyle(
                     color: Colors.white,
                     fontSize: 18,
                     fontWeight: FontWeight.w500
@@ -55,8 +60,11 @@ class NewDetailsPage extends StatelessWidget {
                     horizontal: mqWidth(context, 5),
                     vertical: mqHeigth(context, 3)
                   ),
-                  child: const SingleChildScrollView(
-                    child: Text("This text"),
+                  child: SingleChildScrollView(
+                    child: Text(articleEntity.description, style: const TextStyle(
+                      height: 2,
+                      fontSize: 16
+                    ),),
                   ),
                 ),
               ],
@@ -65,7 +73,7 @@ class NewDetailsPage extends StatelessWidget {
               top: mqHeigth(context, 5),
               left: mqWidth(context, 5),
               child: IconButton(
-                onPressed: (){}, 
+                onPressed: () => Navigator.pop(context), 
                 icon: Icon(Platform.isAndroid ? Icons.arrow_back : Icons.arrow_back_ios)
               ),
             )

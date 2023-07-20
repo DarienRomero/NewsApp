@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_app/core/utils.dart';
+import 'package:news_app/features/common/presentation/widgets/empty_view.dart';
+import 'package:news_app/features/common/presentation/widgets/error_view.dart';
+import 'package:news_app/features/common/presentation/widgets/loading_view.dart';
 import 'package:news_app/features/common/presentation/widgets/scaffold_wrapper.dart';
+import 'package:news_app/features/news/presentation/bloc/news_bloc.dart';
 import 'package:news_app/features/news/presentation/widgets/new_preview_item.dart';
 
 class NewsHomePage extends StatefulWidget {
@@ -11,7 +16,15 @@ class NewsHomePage extends StatefulWidget {
 }
 
 class _NewsHomePageState extends State<NewsHomePage> {
-  final news = [1, 2, 3, 4, 5];
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      BlocProvider.of<NewsBloc>(context, listen: false).add(StartGetNews());
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return ScaffoldWrapper(
@@ -20,23 +33,37 @@ class _NewsHomePageState extends State<NewsHomePage> {
         leading: Container(),
         centerTitle: true,
       ),
-      body: Container(
-        padding: EdgeInsets.symmetric(
-          horizontal: mqWidth(context, 5)
-        ),
-        child: SizedBox(
-          height: mqHeigth(context, 100),
-          child: ListView.builder(
-            itemCount: news.length,
-            scrollDirection: Axis.vertical,
-            padding: EdgeInsets.only(
-              top: mqHeigth(context, 3)
+      body: BlocBuilder<NewsBloc, NewsState>(
+        builder: (context, newsState) {
+          return newsState.newsListLoading ? const LoadingView(
+            heigth: 100
+          ) : newsState.newsListError ? const ErrorView(
+            heigth: 100
+          ) : newsState.newsList.isEmpty ? const EmptyView(
+            heigth: 100
+          ) :  Container(
+            padding: EdgeInsets.symmetric(
+              horizontal: mqWidth(context, 5)
             ),
-            itemBuilder: (context, index) {
-              return const NewPreviewItem();
-            },
-          ),
-        ),
+            child: 
+            SizedBox(
+              height: mqHeigth(context, 100),
+              child: ListView.builder(
+                itemCount: newsState.newsList.length,
+                scrollDirection: Axis.vertical,
+                padding: EdgeInsets.only(
+                  top: mqHeigth(context, 3)
+                ),
+                itemBuilder: (context, index) {
+                  final item  = newsState.newsList[index];
+                  return NewPreviewItem(
+                    articleEntity: item,
+                  );
+                },
+              ),
+            ),
+          );
+        },
       )
     );
   }
