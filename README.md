@@ -4,8 +4,10 @@ News Aplication
 
 ## Features
 
-Full clean architecture divided into features
-Android and iOS launcher icon
-Responsive and font size management
-Sentry implemented to catch potential errors (Native and Web services)
-Image cache aware (Clean cache after a threshold reached)
+<ol>
+  <li>Full clean architecture divided into features</li>
+  <li>Android and iOS launcher icon</li>
+  <li>Responsive and font size management</li>
+  <li>Sentry implemented to catch potential errors (Native and Web services)</li>
+  <li>Image cache aware (Clean cache after a threshold reached)</li>
+</ol>
