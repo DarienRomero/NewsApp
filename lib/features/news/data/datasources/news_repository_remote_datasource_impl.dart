@@ -6,6 +6,7 @@ import 'package:news_app/core/utils.dart';
 import 'package:news_app/features/news/data/datasources/news_repository_remote_datasource.dart';
 import 'package:news_app/features/news/data/models/article_model.dart';
 import 'package:news_app/features/news/data/models/responses/news_list_response.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 
 class NewsRepositoryRemoteDataSourceImpl implements NewsRepositoryRemoteDataSource{
 
@@ -27,6 +28,9 @@ class NewsRepositoryRemoteDataSourceImpl implements NewsRepositoryRemoteDataSour
       if(response.statusCode == 200){
         return newsListResponseFromMap(response.body).articles;
       }else{
+        await Sentry.captureMessage(
+        "getNewsList: RESPONSE: ${response.body}",
+      );
         throw invalidDataFailureFromMap(response.body);
       }
     } on SocketException {
@@ -34,9 +38,9 @@ class NewsRepositoryRemoteDataSourceImpl implements NewsRepositoryRemoteDataSour
     } on InvalidDataFailure{
       rethrow;
     }catch(e){
-      /* await Sentry.captureMessage(
-        "signInUser: EXCEPTION: " + e.toString() + " BODY: " + signInBodyToMap(body),
-      ); */
+      await Sentry.captureMessage(
+        "getNewsList: EXCEPTION: $e BODY: ",
+      );
       throw UnknownFailure.exception;
     }
   }

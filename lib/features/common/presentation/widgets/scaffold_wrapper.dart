@@ -34,7 +34,7 @@ class ScaffoldWrapper extends StatelessWidget {
   Widget build(BuildContext context) {
     final bounded = MediaQuery.of(context).textScaleFactor.clamp(1.0, 1.2);
     return MediaQuery(
-      data: MediaQuery.of(context).copyWith(textScaleFactor: 1.2),
+      data: MediaQuery.of(context).copyWith(textScaleFactor: bounded),
       child: WillPopScope(
         onWillPop: onWillPop,
         child: Scaffold(
