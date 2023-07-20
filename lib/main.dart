@@ -46,7 +46,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (_) => serviceLocator.get<NewsBloc>()),
       ],
       child: const MaterialApp(
-        title: 'Material App',
+        title: 'News App',
         debugShowCheckedModeBanner: false,
         home: RouterPage()
       ),
